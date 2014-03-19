@@ -16,8 +16,10 @@ private:
 	int height;
 public:
 	Heightmap(std::string file);
+	void show(std::ostream & os) const;
 	~Heightmap();
 };
 
+std::ostream & operator<<(std::ostream & os,const Heightmap & h);
 
 #endif
