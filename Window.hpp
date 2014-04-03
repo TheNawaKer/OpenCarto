@@ -8,7 +8,10 @@
 #include <string.h>
 
 class Window {
-	public:
+private:
+	//Camera camera;
+	//Render render;
+public:
 	Window(int x=640,int y=480,std::string titre="Test");
 };
 

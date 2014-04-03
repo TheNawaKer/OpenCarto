@@ -14,8 +14,6 @@ int main(int argc, char ** argv){
     ilutInit();
    	srand(time(NULL));
 	glutInit(&argc, argv); 
-
-	Heightmap heightmap("res/heightmap.jpg");
 	//cout<<heightmap<<endl;
 	Window window;
 	return 0;
