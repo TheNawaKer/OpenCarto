@@ -4,14 +4,12 @@ using namespace std;
 static int zoom=0;
 
 Window::Window(int x,int y,string titre){
-
+	win=this;
 	glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH); 
 	glDepthMask(GL_TRUE);
-
 	glutInitWindowSize (x, y);
 	glutInitWindowPosition (0, 0);
-	glutCreateWindow (titre.c_str());
-	
+	glutCreateWindow("OpenCarto");
 	//ACTIVATION ETAT
 	glShadeModel(GL_SMOOTH);  // Permet un joli ombrage
 	glClearColor (0.0, 0.0, 0.0, 0.0); //√àtabli vers quelle couleur la fen√çtre sera vid√àe
@@ -28,16 +26,16 @@ Window::Window(int x,int y,string titre){
     // glTexEnvf(GL_TEXTURE_ENV,GL_TEXTURE_ENV_MODE,GL_REPLACE);
 
     //linkage des fonctions
-    glutReshapeFunc(reshape);
-    glutKeyboardFunc(key);
-    glutDisplayFunc(display); 
-    glutIdleFunc(display); 
+    glutReshapeFunc(Window::reshapeFct);
+    glutKeyboardFunc(Window::keyFct);
+    glutDisplayFunc(Window::displayFct); 
+    glutIdleFunc(Window::idleFct); 
 
     glutMainLoop();
 }
 
 
-void reshape(int w,int h){
+void Window::reshape(int w,int h){
 	glViewport (0, 0, (GLsizei) w, (GLsizei) h); 
 	glMatrixMode (GL_PROJECTION);
 	glLoadIdentity ();
@@ -45,15 +43,20 @@ void reshape(int w,int h){
 	glMatrixMode(GL_MODELVIEW);
 }
 
-void display(void){
+void Window::display(void){
 	framerate();
 	glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); //vide r√àellement la fen√çtre
 	glLoadIdentity();
 	glTranslated(0,0,zoom-5);
+	render.render();
 	glutSwapBuffers();
 }
 
-void framerate(void){
+void Window::idle(){
+	framerate();
+}
+
+void Window::framerate(void){
 	static int frame=0,time,timebase=0;
 	static char titre[100];
 	
@@ -68,7 +71,7 @@ void framerate(void){
 	}
 }
 
-void key(unsigned char key , int x , int y ){
+void Window::key(unsigned char key , int x , int y ){
 	switch ( key ) {
 		case 'w'  : zoom-=0.1f;		
 			break;
@@ -87,4 +90,3 @@ void key(unsigned char key , int x , int y ){
 	}
 		glutPostRedisplay();
 }
-
