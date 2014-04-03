@@ -15,18 +15,18 @@ Heightmap::Heightmap(string file):mapId(0){
 }
 
 void Heightmap::show(ostream & os) const{
-	for(int i=0;i<height*width*3;i+=3){
+	for(int i=0;i<height*width;i++){
 		if(i%width==0){
 			os<<endl;
 		}
 		os<<"[";
-		for(int k=0;k<3;k++){
-			os<<(int)map[i+k];
-			if(k!=2)
-			os<<",";
-		}
+		os<<operator[](i);
 		os<<"],";
 	}
+}
+
+int Heightmap::operator[] (int i) const{
+	return (int)map[i*3];
 }
 
 Heightmap::~Heightmap(){
@@ -36,4 +36,12 @@ Heightmap::~Heightmap(){
 ostream & operator<<(ostream & os,const Heightmap & h){
 	h.show(os);
 	return os;
+}
+
+int Heightmap::getWidth() const{
+	return width;
+}
+
+int Heightmap::getHeight() const{
+	return height;
 }

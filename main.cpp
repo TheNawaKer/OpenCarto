@@ -15,7 +15,8 @@ int main(int argc, char ** argv){
    	srand(time(NULL));
 	glutInit(&argc, argv); 
 
-	Heightmap heightmap("res/map.png");
+	Heightmap heightmap("res/heightmap.jpg");
+	//cout<<heightmap<<endl;
 	Window window;
 	return 0;
 }

@@ -1,21 +1,21 @@
 GXX=g++
-CXXFLAGS = -O2 
+CXXFLAGS = -G3 
 EXEC=princ
 SRC= $(wildcard *.cpp)
 OBJ= $(SRC:.cpp=.o)
 
-LDFLAGS  = -IL -ILU -ILUT -L/usr/X11R6/lib 
-LDLIBS   = -lX11  -lglut -lGL -lGLU -lm -lpng12 
+LDFLAGS  = -L/usr/X11R6/lib 
+LDLIBS   = -lX11  -lglut -lGL -lGLU -lm -lpng12 -lIL -lILU -lILUT
 
 .PHONY:	run	clean
 
 all: $(EXEC)
 
 $(EXEC):  $(OBJ) 
-	$(GXX)  -o $@ $^ $(LDFLAGS) $(LDLIBS)
+	$(GXX) -g3 -o $@ $^ $(LDFLAGS) $(LDLIBS) 
 
 %.o: %.cpp
-	$(GXX)    -o $@    -c $< 
+	$(GXX)    -o $@    -c $<
 
 run: $(EXEC)
 	./$(EXEC)
