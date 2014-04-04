@@ -5,7 +5,9 @@
 using namespace std;
 
 
-Render::Render():heightmap("res/heightmap.jpg"){
+Render::Render():heightmap("res/map.png"){
+  gltextete= ReadPNGFromFile("res/map.png");
+  glTexEnvf(GL_TEXTURE_ENV,GL_TEXTURE_ENV_MODE,GL_REPLACE);
   generate_point();
   generate_indice();
   glEnableClientState(GL_VERTEX_ARRAY);

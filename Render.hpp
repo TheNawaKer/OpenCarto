@@ -2,6 +2,7 @@
 #define RENDER
 
 #include "Heightmap.hpp"
+#include "readpng.h"
 
 class Render{
 private:
@@ -10,6 +11,7 @@ private:
 	float * color;
 
 	int size;
+	gl_texture_t* gltextete;
 	Heightmap heightmap;
 public:
 	Render();

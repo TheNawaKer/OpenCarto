@@ -21,11 +21,9 @@ Window::Window(int x,int y,string titre){
     glEnable( GL_POLYGON_SMOOTH );
     glHint( GL_POLYGON_SMOOTH_HINT, GL_NICEST );
     glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);  // Très jolis calculs de perspective
-    // glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR); // Linear Filtered
-    // glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR); 
-    // glEnable(GL_TEXTURE_2D);
-    // // gltextete= ReadPNGFromFile("/home/furet/opengl/logo/briques.png");
-    // glTexEnvf(GL_TEXTURE_ENV,GL_TEXTURE_ENV_MODE,GL_REPLACE);
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR); // Linear Filtered
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR); 
+    glEnable(GL_TEXTURE_2D);
 
     //linkage des fonctions
     glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
