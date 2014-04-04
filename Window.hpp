@@ -9,6 +9,7 @@
 #include <string.h>
 
 #include "Render.hpp"
+#include "recordGL.h"
 
 class Window {
 private:
@@ -16,6 +17,7 @@ private:
 	Render render;
 	float zoom;
 	float moveX,moveY;
+	recordGL myrec;
 public:
 
 	static Window * win;

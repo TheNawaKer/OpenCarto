@@ -3,7 +3,7 @@ using namespace std;
 
 Window * Window::win = NULL;
 
-Window::Window(int x,int y,string titre){
+Window::Window(int x,int y,string titre):myrec(".",640 , 480){
 	win=this;
 	zoom=0;
 	moveX=moveY=0;
@@ -52,9 +52,8 @@ void Window::display(void){
 	glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); //vide r√àellement la fen√çtre
 	glLoadIdentity();
 	glTranslated(moveX,moveY,0-zoom);
-	//glColor3f(0.0f, 1.0f, 0.0f);
 	render.render();
-	//glutWireTeapot(0.4);
+	myrec.write_ppmfile();
 	glutSwapBuffers();
 }
 
@@ -121,6 +120,8 @@ void Window::key(unsigned char key , int x , int y ){
 		case 'q'  : moveX-=1;	
 			break;
 		case 'd'  : moveX+=1;					
+			break;
+		case 'r' : myrec.switch_recording("record");
 			break;
 		case 0x1B : exit(0); 
 	}
