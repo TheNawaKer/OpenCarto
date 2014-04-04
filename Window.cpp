@@ -45,7 +45,7 @@ void Window::reshape(int w,int h){
   glMatrixMode (GL_PROJECTION);
   glLoadIdentity ();   
   gluPerspective(70.0, (GLfloat) w/(GLfloat) h, 0.01, 700.0);
-  gluLookAt(99/2,80.0,-70.0,99/2,20.0,100.0,0.0,1.0,0.0);
+  gluLookAt(render.getHeight()/2,80.0,-70.0,render.getWidth()/2,20.0,100.0,0.0,1.0,0.0);
   glMatrixMode(GL_MODELVIEW);
 }
 
@@ -112,9 +112,9 @@ void Window::framerate(void){
 
 void Window::key(unsigned char key , int x , int y ){
 	switch ( key ) {
-		case 'w'  : zoom-=0.1f;
+		case 'w'  : zoom-=1.0f;
 			break;
-		case 'x'  : zoom+=0.1f;					
+		case 'x'  : zoom+=1.0f;					
 			break;
 		case 'z'  : moveY+=1;	
 			break;

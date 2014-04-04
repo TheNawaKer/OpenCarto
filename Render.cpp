@@ -5,7 +5,7 @@
 using namespace std;
 
 
-Render::Render():heightmap("res/test.png"){
+Render::Render():heightmap("res/debug.png"){
   generate_point();
   generate_indice();
   glEnableClientState(GL_VERTEX_ARRAY);
@@ -15,8 +15,8 @@ Render::Render():heightmap("res/test.png"){
 }
 void Render::render(){
   void* ptr = NULL;
-  for (int i = 0; i < heightmap.getHeight() ; ++i)
-    glDrawElements(GL_TRIANGLE_STRIP, heightmap.getWidth()*2, GL_UNSIGNED_INT,ptr + i * heightmap.getWidth() * sizeof(unsigned int));}
+  for (int i = 0; i < heightmap.getHeight()-1 ; ++i)
+    glDrawElements(GL_TRIANGLE_STRIP, heightmap.getWidth()*2, GL_UNSIGNED_INT,ptr + i * heightmap.getWidth()*2 * sizeof(unsigned int));}
 
   void Render::generate_indice(){
     int cpt = 0;
@@ -38,7 +38,7 @@ void Render::render(){
     for (int i = 0; i < heightmap.getHeight(); ++i)
       for (int j = 0; j < heightmap.getWidth(); ++j){
         point[cpt] = j;
-        point[cpt+1] = heightmap(i,j);
+        point[cpt+1] = 0;//heightmap(i,j);
         point[cpt+2] = i;
         if ( heightmap(i,j)-128 >= 90) {
           color[cpt] = 0.35;
