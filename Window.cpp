@@ -1,7 +1,7 @@
 #include "Window.hpp"
 using namespace std;
 
-static int zoom=0;
+Window * Window::win = NULL;
 
 Window::Window(int x,int y,string titre){
 	win=this;
@@ -9,7 +9,7 @@ Window::Window(int x,int y,string titre){
 	glDepthMask(GL_TRUE);
 	glutInitWindowSize (x, y);
 	glutInitWindowPosition (0, 0);
-	glutCreateWindow("OpenCarto");
+	glutCreateWindow(titre.c_str());
 	//ACTIVATION ETAT
 	glShadeModel(GL_SMOOTH);  // Permet un joli ombrage
 	glClearColor (0.0, 0.0, 0.0, 0.0); //√àtabli vers quelle couleur la fen√çtre sera vid√àe
@@ -22,15 +22,17 @@ Window::Window(int x,int y,string titre){
     // glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR); // Linear Filtered
     // glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR); 
     // glEnable(GL_TEXTURE_2D);
-    // gltextete= ReadPNGFromFile("/home/furet/opengl/logo/briques.png");
+    // // gltextete= ReadPNGFromFile("/home/furet/opengl/logo/briques.png");
     // glTexEnvf(GL_TEXTURE_ENV,GL_TEXTURE_ENV_MODE,GL_REPLACE);
 
     //linkage des fonctions
     glutReshapeFunc(Window::reshapeFct);
     glutKeyboardFunc(Window::keyFct);
     glutDisplayFunc(Window::displayFct); 
+    glutSpecialFunc(Window::GestionFct);
     glutIdleFunc(Window::idleFct); 
-
+    glewInit();
+    initVBOs();
     glutMainLoop();
 }
 
@@ -49,12 +51,43 @@ void Window::display(void){
 	glLoadIdentity();
 	glTranslated(0,0,zoom-5);
 	render.render();
+	glSolidTeapot(0.4);
 	glutSwapBuffers();
 }
 
 void Window::idle(){
-	framerate();
+	//framerate();
 }
+
+void Window::GestionSpecial(int key, int x, int y) {
+	switch (key) {	
+		case GLUT_KEY_F1 : 
+			glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);
+			break;
+		case GLUT_KEY_F2 : 
+			glPolygonMode(GL_FRONT_AND_BACK,GL_LINE);
+			break;
+		case GLUT_KEY_F3:
+			glShadeModel(GL_SMOOTH);
+			break;
+		case GLUT_KEY_F4:
+			glShadeModel(GL_FLAT);
+			break;
+		// case GLUT_KEY_UP: 
+		// 	Z+=10;
+		// 	break;
+		// case GLUT_KEY_DOWN: 
+		// 	Z-=10;
+		// 	break;
+		// case GLUT_KEY_LEFT :
+		// 	X+=5;
+		// 	break; 
+		// case GLUT_KEY_RIGHT : 
+		// 	X-=5;
+			// break; 
+	}	
+	glutPostRedisplay();
+}	
 
 void Window::framerate(void){
 	static int frame=0,time,timebase=0;
@@ -89,4 +122,16 @@ void Window::key(unsigned char key , int x , int y ){
 		case 0x1B : exit(0); 
 	}
 		glutPostRedisplay();
+}
+
+void Window::initVBOs() {
+  unsigned int bufferids[2];
+  glGenBuffers(2, bufferids);
+  glBindBuffer(GL_ARRAY_BUFFER, bufferids[0]);
+  glBufferData(GL_ARRAY_BUFFER, render.getHeight() * render.getWidth() * 3 * sizeof(float), render.getPoint(), GL_STATIC_DRAW);
+  glVertexPointer(3, GL_FLOAT, 3*sizeof(GL_FLOAT), NULL);
+  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, bufferids[1]);
+  glBufferData(GL_ELEMENT_ARRAY_BUFFER, 2* render.getHeight() * render.getWidth() * sizeof(unsigned int), render.getIndices(), GL_STATIC_DRAW);
+  glEnableClientState(GL_VERTEX_ARRAY);
+  glEnableClientState(GL_INDEX_ARRAY);
 }

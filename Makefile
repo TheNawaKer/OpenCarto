@@ -5,7 +5,7 @@ SRC= $(wildcard *.cpp)
 OBJ= $(SRC:.cpp=.o)
 
 LDFLAGS  = -L/usr/X11R6/lib 
-LDLIBS   = -lX11  -lglut -lGL -lGLU -lm -lpng12 -lIL -lILU -lILUT
+LDLIBS   = -lX11 -lGLEW -lglut -lGL -lGLU -lm -lpng12 -lIL -lILU -lILUT
 
 .PHONY:	run	clean
 

@@ -6,14 +6,21 @@
 class Render{
 private:
 	float * point;
-	int * indices;
+	unsigned int * indices;
 	float * color;
 
+	int size;
 	Heightmap heightmap;
 public:
 	Render();
 	void render();
 	void generate_indice();
+	void generate_point();
+	int getHeight() const;
+	int getWidth() const;
+
+	float* getPoint();
+	unsigned int * getIndices();
 	~Render();
 };
 
