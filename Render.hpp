@@ -18,6 +18,7 @@ public:
 	void render();
 	void generate_indice();
 	void generate_point();
+	void texture();
 	int getHeight() const;
 	int getWidth() const;
 

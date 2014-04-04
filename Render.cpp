@@ -43,27 +43,41 @@ void Render::render(){
         point[cpt] = j;
         point[cpt+1] = heightmap[p]*(15/100.0);
         point[cpt+2] = i;
-        if ( heightmap[p]-128 >= 90) {
-          color[cpt] = 0.35f;
-          color[cpt+1] = 0.16;
-          color[cpt+2] = 0.16;
-        } else if ( heightmap[p]-128 >= 30) {
-          color[cpt] = 0;
-          color[cpt+1] = 1;
-          color[cpt+2] = 0;
-        } else if ( heightmap[p]-128 >= -10 ) {
-          color[cpt] = 0.2;
-          color[cpt+1] = 0.2;
-          color[cpt+2] = 0.9;
-        } else {
-          color[cpt] = 0;
-          color[cpt+1] = 0;
-          color[cpt+2] = 1;
-        }
+        // if ( heightmap[p]-128 >= 90) {
+        //   color[cpt] = 0.35f;
+        //   color[cpt+1] = 0.16;
+        //   color[cpt+2] = 0.16;
+        // } else if ( heightmap[p]-128 >= 30) {
+        //   color[cpt] = 0;
+        //   color[cpt+1] = 1;
+        //   color[cpt+2] = 0;
+        // } else if ( heightmap[p]-128 >= -10 ) {
+        //   color[cpt] = 0.2;
+        //   color[cpt+1] = 0.2;
+        //   color[cpt+2] = 0.9;
+        // } else {
+        //   color[cpt] = 0;
+        //   color[cpt+1] = 0;
+        //   color[cpt+2] = 1;
+        // }
 
         cpt+=3;
         p++;
       }
+      texture();
+
+    }
+
+    void Render::texture(){
+      ILuint mapId;
+      ilGenImages(1, &mapId);
+      ilBindImage(mapId);
+      ilLoadImage("res/texture.png");
+      int width = ilGetInteger(IL_IMAGE_WIDTH);
+      int height = ilGetInteger(IL_IMAGE_HEIGHT);
+      ilCopyPixels(0, 0, 0, width, height, 1, IL_RGB,IL_FLOAT, color);
+      ilBindImage(0);
+      ilDeleteImage(mapId);
     }
 
     int Render::getHeight() const{
