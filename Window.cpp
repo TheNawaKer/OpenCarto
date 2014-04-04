@@ -54,7 +54,7 @@ void Window::display(void){
 	glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); //vide r√àellement la fen√çtre
 	glLoadIdentity();
 	glTranslated(moveX,moveY,0-zoom);
-	glColor3f(0.0f, 1.0f, 0.0f);
+	//glColor3f(0.0f, 1.0f, 0.0f);
 	render.render();
 	//glutWireTeapot(0.4);
 	glutSwapBuffers();
