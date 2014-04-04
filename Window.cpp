@@ -5,6 +5,7 @@ Window * Window::win = NULL;
 
 Window::Window(int x,int y,string titre){
 	win=this;
+	zoom=0;
 	glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH); 
 	glDepthMask(GL_TRUE);
 	glutInitWindowSize (x, y);
@@ -26,6 +27,7 @@ Window::Window(int x,int y,string titre){
     // glTexEnvf(GL_TEXTURE_ENV,GL_TEXTURE_ENV_MODE,GL_REPLACE);
 
     //linkage des fonctions
+    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
     glutReshapeFunc(Window::reshapeFct);
     glutKeyboardFunc(Window::keyFct);
     glutDisplayFunc(Window::displayFct); 
@@ -38,20 +40,22 @@ Window::Window(int x,int y,string titre){
 
 
 void Window::reshape(int w,int h){
-	glViewport (0, 0, (GLsizei) w, (GLsizei) h); 
-	glMatrixMode (GL_PROJECTION);
-	glLoadIdentity ();
-	gluPerspective(70.0, (GLfloat) w/(GLfloat) h, 0.01, 30.0);
-	glMatrixMode(GL_MODELVIEW);
+  glViewport (0, 0, (GLsizei) w, (GLsizei) h); 
+  glMatrixMode (GL_PROJECTION);
+  glLoadIdentity ();   
+  gluPerspective(70.0, (GLfloat) w/(GLfloat) h, 0.01, 700.0);
+  gluLookAt(799/2,80.0,-70.0,799/2,20.0,100.0,0.0,1.0,0.0);
+  glMatrixMode(GL_MODELVIEW);
 }
 
 void Window::display(void){
 	framerate();
 	glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); //vide r√àellement la fen√çtre
 	glLoadIdentity();
-	glTranslated(0,0,zoom-5);
+	glTranslated(0,0,0-zoom);
+	glColor3f(0.0f, 1.0f, 0.0f);
 	render.render();
-	glSolidTeapot(0.4);
+	glutWireTeapot(0.4);
 	glutSwapBuffers();
 }
 
@@ -106,7 +110,8 @@ void Window::framerate(void){
 
 void Window::key(unsigned char key , int x , int y ){
 	switch ( key ) {
-		case 'w'  : zoom-=0.1f;		
+		case 'w'  : zoom-=0.1f;
+		cout<<"zoom"<<endl;		
 			break;
 		case 'x'  : zoom+=0.1f;					
 			break;	

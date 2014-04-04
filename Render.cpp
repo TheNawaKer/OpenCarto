@@ -9,13 +9,15 @@ Render::Render():heightmap("res/heightmap.jpg"){
     generate_point();
     generate_indice();
     glEnableClientState(GL_VERTEX_ARRAY);
+    glEnableClientState(GL_COLOR_ARRAY);
     glVertexPointer(3,GL_FLOAT, 3*sizeof(GL_FLOAT),point);  
+    glColorPointer(3, GL_FLOAT, 3*sizeof(GL_FLOAT), color);
 }
 void Render::render(){
+  glColor3f(0.0,0.0,1.0);
   void* ptr = NULL;
-  for (int i = 0; i < heightmap.getHeight(); ++i)
-    glDrawElements(GL_TRIANGLE_STRIP, heightmap.getWidth()*2, GL_UNSIGNED_INT,ptr + i * heightmap.getWidth() * sizeof(unsigned int));
-}
+  for (int i = 0; i < heightmap.getHeight() * 2 - 10 ; ++i)
+    glDrawElements(GL_TRIANGLE_STRIP, heightmap.getWidth()*2, GL_UNSIGNED_INT,ptr + i * heightmap.getWidth() * sizeof(unsigned int));}
 
 void Render::generate_indice(){
     int cpt = 0;
@@ -37,8 +39,11 @@ void Render::generate_point(){
     for (int i = 0; i < heightmap.getHeight(); ++i)
       for (int j = 0; j < heightmap.getWidth(); ++j){
         point[cpt] = j;
-        point[cpt+1] = 0;//heightmap(j,i);
+        point[cpt+1] = heightmap(i,j);
         point[cpt+2] = i;
+        color[cpt]=0;
+        color[cpt+1]=1.0f;
+        color[cpt+2]=0;
         cpt+=3;
     }
 }

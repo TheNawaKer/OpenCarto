@@ -20,13 +20,13 @@ void Heightmap::show(ostream & os) const{
 			os<<endl;
 		}
 		os<<"[";
-		os<<operator[](i);
+		os<<operator()(i,0);
 		os<<"],";
 	}
 }
 
-int Heightmap::operator[] (int i) const{
-	return (int)map[i*3];
+int Heightmap::operator() (int i,int j) const{
+	return (int)map[j*width +i*3];
 }
 
 Heightmap::~Heightmap(){

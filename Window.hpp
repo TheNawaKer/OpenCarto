@@ -14,7 +14,7 @@ class Window {
 private:
 	//Camera camera;
 	Render render;
-	int zoom;
+	float zoom;
 public:
 
 	static Window * win;
