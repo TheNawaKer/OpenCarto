@@ -15,6 +15,7 @@ private:
 	//Camera camera;
 	Render render;
 	float zoom;
+	float moveX,moveY;
 public:
 
 	static Window * win;

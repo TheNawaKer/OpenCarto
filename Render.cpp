@@ -5,7 +5,7 @@
 using namespace std;
 
 
-Render::Render():heightmap("res/heightmap.jpg"){
+Render::Render():heightmap("res/test.png"){
     generate_point();
     generate_indice();
     glEnableClientState(GL_VERTEX_ARRAY);
@@ -14,7 +14,6 @@ Render::Render():heightmap("res/heightmap.jpg"){
     glColorPointer(3, GL_FLOAT, 3*sizeof(GL_FLOAT), color);
 }
 void Render::render(){
-  glColor3f(0.0,0.0,1.0);
   void* ptr = NULL;
   for (int i = 0; i < heightmap.getHeight() * 2 - 10 ; ++i)
     glDrawElements(GL_TRIANGLE_STRIP, heightmap.getWidth()*2, GL_UNSIGNED_INT,ptr + i * heightmap.getWidth() * sizeof(unsigned int));}

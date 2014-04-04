@@ -6,6 +6,7 @@ Window * Window::win = NULL;
 Window::Window(int x,int y,string titre){
 	win=this;
 	zoom=0;
+	moveX=moveY=0;
 	glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH); 
 	glDepthMask(GL_TRUE);
 	glutInitWindowSize (x, y);
@@ -44,7 +45,7 @@ void Window::reshape(int w,int h){
   glMatrixMode (GL_PROJECTION);
   glLoadIdentity ();   
   gluPerspective(70.0, (GLfloat) w/(GLfloat) h, 0.01, 700.0);
-  gluLookAt(799/2,80.0,-70.0,799/2,20.0,100.0,0.0,1.0,0.0);
+  gluLookAt(99/2,80.0,-70.0,99/2,20.0,100.0,0.0,1.0,0.0);
   glMatrixMode(GL_MODELVIEW);
 }
 
@@ -52,10 +53,10 @@ void Window::display(void){
 	framerate();
 	glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); //vide r√àellement la fen√çtre
 	glLoadIdentity();
-	glTranslated(0,0,0-zoom);
+	glTranslated(moveX,moveY,0-zoom);
 	glColor3f(0.0f, 1.0f, 0.0f);
 	render.render();
-	glutWireTeapot(0.4);
+	//glutWireTeapot(0.4);
 	glutSwapBuffers();
 }
 
@@ -64,6 +65,7 @@ void Window::idle(){
 }
 
 void Window::GestionSpecial(int key, int x, int y) {
+		cout<<"special"<<endl;
 	switch (key) {	
 		case GLUT_KEY_F1 : 
 			glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);
@@ -111,19 +113,17 @@ void Window::framerate(void){
 void Window::key(unsigned char key , int x , int y ){
 	switch ( key ) {
 		case 'w'  : zoom-=0.1f;
-		cout<<"zoom"<<endl;		
 			break;
 		case 'x'  : zoom+=0.1f;					
-			break;	
-		case GLUT_KEY_F1 : glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);
 			break;
-		case GLUT_KEY_F2 : glPolygonMode(GL_FRONT_AND_BACK,GL_LINE);
+		case 'z'  : moveY+=1;	
 			break;
-
-		case GLUT_KEY_LEFT : zoom-=0.1;
-			break; 
-		case GLUT_KEY_RIGHT : zoom+=0.1; 
-			break; 		
+		case 's'  : moveY-=1;					
+			break;
+		case 'q'  : moveX-=1;	
+			break;
+		case 'd'  : moveX+=1;					
+			break;
 		case 0x1B : exit(0); 
 	}
 		glutPostRedisplay();
