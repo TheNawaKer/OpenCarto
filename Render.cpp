@@ -5,7 +5,7 @@
 using namespace std;
 
 
-Render::Render():heightmap("res/debug.png"){
+Render::Render():heightmap("res/heightmap.jpg"){
   generate_point();
   generate_indice();
   glEnableClientState(GL_VERTEX_ARRAY);
@@ -39,17 +39,17 @@ void Render::render(){
     for (int i = 0; i < heightmap.getHeight(); ++i)
       for (int j = 0; j < heightmap.getWidth(); ++j){
         point[cpt] = j;
-        point[cpt+1] = heightmap(p,0)*(15/100.0);
+        point[cpt+1] = heightmap[p]*(15/100.0);
         point[cpt+2] = i;
-        if ( heightmap(p,0)-128 >= 90) {
-          color[cpt] = 0.35;
+        if ( heightmap[p]-128 >= 90) {
+          color[cpt] = 0.35f;
           color[cpt+1] = 0.16;
           color[cpt+2] = 0.16;
-        } else if ( heightmap(p,0)-128 >= 30) {
+        } else if ( heightmap[p]-128 >= 30) {
           color[cpt] = 0;
           color[cpt+1] = 1;
           color[cpt+2] = 0;
-        } else if ( heightmap(p,0)-128 >= -10 ) {
+        } else if ( heightmap[p]-128 >= -10 ) {
           color[cpt] = 0.2;
           color[cpt+1] = 0.2;
           color[cpt+2] = 0.9;
@@ -74,6 +74,10 @@ void Render::render(){
 
     float* Render::getPoint(){
       return point;
+    }
+
+    float* Render::getColor(){
+      return color;
     }
 
     unsigned int *  Render::getIndices(){

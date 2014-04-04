@@ -130,13 +130,22 @@ void Window::key(unsigned char key , int x , int y ){
 }
 
 void Window::initVBOs() {
-  unsigned int bufferids[2];
-  glGenBuffers(2, bufferids);
+  unsigned int bufferids[3];
+  glGenBuffers(3, bufferids);
+
   glBindBuffer(GL_ARRAY_BUFFER, bufferids[0]);
   glBufferData(GL_ARRAY_BUFFER, render.getHeight() * render.getWidth() * 3 * sizeof(float), render.getPoint(), GL_STATIC_DRAW);
   glVertexPointer(3, GL_FLOAT, 3*sizeof(GL_FLOAT), NULL);
-  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, bufferids[1]);
+
+   glBindBuffer(GL_ARRAY_BUFFER, bufferids[1]);
+  glBufferData(GL_ARRAY_BUFFER, render.getHeight() * render.getWidth() * 3 * sizeof(float), render.getColor(), GL_STATIC_DRAW);
+  glColorPointer(3, GL_FLOAT, 3*sizeof(GL_FLOAT), NULL);
+
+
+  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, bufferids[2]);
   glBufferData(GL_ELEMENT_ARRAY_BUFFER, 2* render.getHeight() * render.getWidth() * sizeof(unsigned int), render.getIndices(), GL_STATIC_DRAW);
+  
   glEnableClientState(GL_VERTEX_ARRAY);
   glEnableClientState(GL_INDEX_ARRAY);
+  glEnableClientState(GL_COLOR_ARRAY);
 }

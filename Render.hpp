@@ -20,6 +20,7 @@ public:
 	int getWidth() const;
 
 	float* getPoint();
+	float* getColor();
 	unsigned int * getIndices();
 	~Render();
 };

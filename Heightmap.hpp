@@ -17,7 +17,7 @@ private:
 public:
 	Heightmap(std::string file);
 	void show(std::ostream & os) const;
-	int operator() (int i,int j) const;
+	int operator[] (int i) const;
 	int getWidth() const;
 	int getHeight() const;
 	~Heightmap();
