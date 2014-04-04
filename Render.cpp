@@ -35,20 +35,21 @@ void Render::render(){
     point=new float[heightmap.getHeight()*heightmap.getWidth()*3];
     color=new float[heightmap.getHeight()*heightmap.getWidth()*3];
     int cpt = 0;
+    int p=0;
     for (int i = 0; i < heightmap.getHeight(); ++i)
       for (int j = 0; j < heightmap.getWidth(); ++j){
         point[cpt] = j;
-        point[cpt+1] = 0;//heightmap(i,j);
+        point[cpt+1] = heightmap(p,0)*(15/100.0);
         point[cpt+2] = i;
-        if ( heightmap(i,j)-128 >= 90) {
+        if ( heightmap(p,0)-128 >= 90) {
           color[cpt] = 0.35;
           color[cpt+1] = 0.16;
           color[cpt+2] = 0.16;
-        } else if ( heightmap(i,j)-128 >= 30) {
+        } else if ( heightmap(p,0)-128 >= 30) {
           color[cpt] = 0;
           color[cpt+1] = 1;
           color[cpt+2] = 0;
-        } else if ( heightmap(i,j)-128 >= -10 ) {
+        } else if ( heightmap(p,0)-128 >= -10 ) {
           color[cpt] = 0.2;
           color[cpt+1] = 0.2;
           color[cpt+2] = 0.9;
@@ -59,6 +60,7 @@ void Render::render(){
         }
 
         cpt+=3;
+        p++;
       }
     }
 
@@ -80,4 +82,6 @@ void Render::render(){
 
     Render::~Render(){
      delete [] point;
+     delete [] indices;
+     delete [] color;
    }
